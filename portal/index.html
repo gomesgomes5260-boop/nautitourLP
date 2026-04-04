@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Escuna Estrela — Wi-Fi Gratuito</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Georgia', serif;
+    background: #E8DCC8;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .card {
+    background: #FAF6EF;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 400px;
+    overflow: hidden;
+    box-shadow: 0 4px 40px rgba(26,90,70,0.15);
+  }
+
+  .header {
+    background: linear-gradient(160deg, #1B8A7A 0%, #145A4E 100%);
+    padding: 32px 28px 28px;
+    text-align: center;
+    position: relative;
+  }
+
+  .wave {
+    position: absolute;
+    bottom: -1px; left: 0; right: 0;
+    height: 24px;
+    fill: #FAF6EF;
+  }
+
+  .logo-icon {
+    width: 56px;
+    height: 56px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 14px;
+    font-size: 26px;
+  }
+
+  .header h1 {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+
+  .header p {
+    color: rgba(255,255,255,0.75);
+    font-size: 13px;
+    font-family: 'Helvetica Neue', sans-serif;
+  }
+
+  .body {
+    padding: 28px 24px 24px;
+  }
+
+  .field {
+    margin-bottom: 16px;
+  }
+
+  label {
+    display: block;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: #7A6E5D;
+    margin-bottom: 6px;
+  }
+
+  input, select {
+    width: 100%;
+    padding: 11px 14px;
+    font-size: 14px;
+    font-family: 'Helvetica Neue', sans-serif;
+    border: 1.5px solid #D6CCBA;
+    border-radius: 10px;
+    background: #F5F0E8;
+    color: #2A2418;
+    transition: border-color 0.2s, background 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  input:focus, select:focus {
+    outline: none;
+    border-color: #1B7A6A;
+    background: #fff;
+  }
+
+  .select-wrap {
+    position: relative;
+  }
+
+  .select-wrap::after {
+    content: '';
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #1B7A6A;
+    pointer-events: none;
+  }
+
+  .field-estado {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.35s ease, opacity 0.35s ease, margin-bottom 0.35s ease;
+    margin-bottom: 0;
+  }
+
+  .field-estado.visible {
+    max-height: 80px;
+    opacity: 1;
+    margin-bottom: 16px;
+  }
+
+  .radio-group {
+    display: flex;
+    gap: 8px;
+  }
+
+  .radio-opt {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 10px;
+    border: 1.5px solid #D6CCBA;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #F5F0E8;
+    transition: all 0.2s;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 13px;
+    color: #7A6E5D;
+    user-select: none;
+  }
+
+  .radio-opt.selected {
+    border-color: #1B7A6A;
+    background: #E0F0EC;
+    color: #1B7A6A;
+    font-weight: 600;
+  }
+
+  .radio-dot {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .radio-inner {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #1B7A6A;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .radio-opt.selected .radio-inner { opacity: 1; }
+
+  .opt-wrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+
+  .opt-wrap input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    accent-color: #1B7A6A;
+    flex-shrink: 0;
+  }
+
+  .opt-wrap span {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 12px;
+    color: #9A8E7D;
+    line-height: 1.6;
+  }
+
+  .btn {
+    width: 100%;
+    background: #1B7A6A;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 15px;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  .btn:hover { background: #145A4E; }
+  .btn:active { transform: scale(0.98); }
+  .btn:disabled { background: #A8BDB7; cursor: not-allowed; }
+
+  .footer {
+    text-align: center;
+    padding: 14px 24px 20px;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 11px;
+    color: #B0A594;
+  }
+
+  .success {
+    display: none;
+    padding: 40px 28px;
+    text-align: center;
+  }
+
+  .success-icon {
+    width: 60px;
+    height: 60px;
+    background: #E0F0EC;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 28px;
+  }
+
+  .success h2 {
+    font-size: 20px;
+    color: #2A2418;
+    font-weight: normal;
+    margin-bottom: 8px;
+  }
+
+  .success p {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 14px;
+    color: #7A6E5D;
+    line-height: 1.6;
+  }
+
+  .error-msg {
+    display: none;
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 13px;
+    color: #dc2626;
+    margin-bottom: 16px;
+  }
+
+  .social-section {
+    padding: 24px 24px 0;
+  }
+
+  .social-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 13px 16px;
+    border-radius: 12px;
+    border: none;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    margin-bottom: 10px;
+  }
+
+  .social-btn:active { transform: scale(0.98); }
+
+  .social-btn.facebook {
+    background: #1877F2;
+    color: #fff;
+  }
+  .social-btn.facebook:hover { background: #1565d8; }
+
+  .social-btn.instagram {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    color: #fff;
+  }
+  .social-btn.instagram:hover { opacity: 0.9; }
+
+  .social-btn svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px 24px;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 12px;
+    color: #B0A594;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .divider::before,
+  .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #D6CCBA;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="header">
+    <div class="logo-icon">&#11088;</div>
+    <h1>Escuna Estrela</h1>
+    <p>Conecte-se ao Wi-Fi gratuito</p>
+    <svg class="wave" viewBox="0 0 400 24" preserveAspectRatio="none">
+      <path d="M0,24 C100,0 300,24 400,8 L400,24 Z"/>
+    </svg>
+  </div>
+
+  <div id="form-area">
+    <div class="social-section">
+      <button class="social-btn facebook" onclick="loginFacebook()">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Entrar com Facebook
+      </button>
+      <button class="social-btn instagram" onclick="loginInstagram()">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        Entrar com Instagram
+      </button>
+    </div>
+
+    <div class="divider">ou preencha manualmente</div>
+
+    <div class="body">
+      <div class="error-msg" id="error-msg">Por favor, preencha todos os campos obrigatórios.</div>
+
+      <div class="field">
+        <label>Nome</label>
+        <input type="text" id="nome" placeholder="Seu nome completo" autocomplete="name" />
+      </div>
+
+      <div class="field">
+        <label>WhatsApp</label>
+        <input type="tel" id="whatsapp" placeholder="+55 (22) 99999-0000" autocomplete="tel" />
+      </div>
+
+      <div class="field">
+        <label>País de origem</label>
+        <div class="select-wrap">
+          <select id="pais" onchange="handlePais(this.value)">
+            <option value="">Selecione seu país...</option>
+            <option value="BR">Brasil</option>
+            <option value="AR">Argentina</option>
+            <option value="UY">Uruguai</option>
+            <option value="CL">Chile</option>
+            <option value="US">Estados Unidos</option>
+            <option value="PT">Portugal</option>
+            <option value="DE">Alemanha</option>
+            <option value="FR">França</option>
+            <option value="IT">Itália</option>
+            <option value="ES">Espanha</option>
+            <option value="OTHER">Outro</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-estado" id="estado-wrap">
+        <label>Estado</label>
+        <div class="select-wrap">
+          <select id="estado">
+            <option value="">Selecione o estado...</option>
+            <option value="AC">Acre</option>
+            <option value="AL">Alagoas</option>
+            <option value="AP">Amapá</option>
+            <option value="AM">Amazonas</option>
+            <option value="BA">Bahia</option>
+            <option value="CE">Ceará</option>
+            <option value="DF">Distrito Federal</option>
+            <option value="ES">Espírito Santo</option>
+            <option value="GO">Goiás</option>
+            <option value="MA">Maranhão</option>
+            <option value="MT">Mato Grosso</option>
+            <option value="MS">Mato Grosso do Sul</option>
+            <option value="MG">Minas Gerais</option>
+            <option value="PA">Pará</option>
+            <option value="PB">Paraíba</option>
+            <option value="PR">Paraná</option>
+            <option value="PE">Pernambuco</option>
+            <option value="PI">Piauí</option>
+            <option value="RJ">Rio de Janeiro</option>
+            <option value="RN">Rio Grande do Norte</option>
+            <option value="RS">Rio Grande do Sul</option>
+            <option value="RO">Rondônia</option>
+            <option value="RR">Roraima</option>
+            <option value="SC">Santa Catarina</option>
+            <option value="SP">São Paulo</option>
+            <option value="SE">Sergipe</option>
+            <option value="TO">Tocantins</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Já fez o passeio de escuna conosco?</label>
+        <div class="radio-group">
+          <div class="radio-opt" id="opt-sim" onclick="selectPasseio('sim')">
+            <div class="radio-dot"><div class="radio-inner"></div></div>
+            Sim
+          </div>
+          <div class="radio-opt" id="opt-nao" onclick="selectPasseio('nao')">
+            <div class="radio-dot"><div class="radio-inner"></div></div>
+            Não
+          </div>
+        </div>
+      </div>
+
+      <div class="opt-wrap">
+        <input type="checkbox" id="optin" checked />
+        <span>Aceito receber novidades e ofertas da Escuna Estrela pelo WhatsApp</span>
+      </div>
+
+      <button class="btn" id="btn-submit" onclick="submitForm()">Conectar ao Wi-Fi</button>
+    </div>
+
+    <div class="footer">
+      Seus dados são protegidos conforme a LGPD · <a href="#" style="color:#1B7A6A;">Política de privacidade</a>
+    </div>
+  </div>
+
+  <div class="success" id="success-area">
+    <div class="success-icon">&#127754;</div>
+    <h2>Bem-vindo(a), <span id="success-nome"></span>!</h2>
+    <p>Você está conectado(a) ao Wi-Fi da Escuna Estrela.<br>Em breve você receberá uma mensagem no WhatsApp.</p>
+  </div>
+</div>
+
+<script>
+  const WEBHOOK_URL = 'COLE_AQUI_A_URL_DO_GOOGLE_APPS_SCRIPT';
+  const FACEBOOK_APP_ID = 'COLE_AQUI_SEU_FACEBOOK_APP_ID';
+
+  let passeioSelecionado = null;
+
+  // --- Facebook SDK ---
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId: FACEBOOK_APP_ID,
+      cookie: true,
+      xfbml: false,
+      version: 'v19.0'
+    });
+  };
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = 'https://connect.facebook.net/pt_BR/sdk.js';
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  function loginFacebook() {
+    if (typeof FB === 'undefined') {
+      alert('SDK do Facebook ainda carregando. Tente novamente em alguns segundos.');
+      return;
+    }
+    FB.login(function(response) {
+      if (response.authResponse) {
+        FB.api('/me', { fields: 'name,email' }, function(user) {
+          submitSocial(user.name, user.email || '', 'facebook');
+        });
+      }
+    }, { scope: 'public_profile,email' });
+  }
+
+  function loginInstagram() {
+    if (typeof FB === 'undefined') {
+      alert('SDK do Facebook ainda carregando. Tente novamente em alguns segundos.');
+      return;
+    }
+    FB.login(function(response) {
+      if (response.authResponse) {
+        FB.api('/me', { fields: 'name,email' }, function(user) {
+          submitSocial(user.name, user.email || '', 'instagram');
+        });
+      }
+    }, { scope: 'public_profile,email', auth_type: 'rerequest' });
+  }
+
+  async function submitSocial(nome, email, provider) {
+    const payload = {
+      nome: nome,
+      whatsapp: '',
+      pais: '',
+      estado: '',
+      ja_fez_passeio: '',
+      optin_marketing: 'Sim',
+      data_hora: new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }),
+      login_social: provider,
+      email_social: email
+    };
+
+    try {
+      await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } catch (e) {}
+
+    document.getElementById('form-area').style.display = 'none';
+    document.getElementById('success-nome').textContent = nome.split(' ')[0];
+    document.getElementById('success-area').style.display = 'block';
+  }
+
+  function handlePais(val) {
+    const wrap = document.getElementById('estado-wrap');
+    const wpp = document.getElementById('whatsapp');
+    if (val === 'BR') {
+      wrap.classList.add('visible');
+      wpp.placeholder = '+55 (22) 99999-0000';
+    } else {
+      wrap.classList.remove('visible');
+      document.getElementById('estado').value = '';
+      const placeholders = { AR: '+54 9 11 0000-0000', UY: '+598 9 000 0000', US: '+1 (555) 000-0000', PT: '+351 900 000 000' };
+      wpp.placeholder = placeholders[val] || '+__ __________';
+    }
+  }
+
+  function selectPasseio(val) {
+    passeioSelecionado = val;
+    document.getElementById('opt-sim').classList.toggle('selected', val === 'sim');
+    document.getElementById('opt-nao').classList.toggle('selected', val === 'nao');
+  }
+
+  async function submitForm() {
+    const nome = document.getElementById('nome').value.trim();
+    const whatsapp = document.getElementById('whatsapp').value.trim();
+    const pais = document.getElementById('pais').value;
+    const estado = document.getElementById('estado').value;
+    const optin = document.getElementById('optin').checked;
+    const errorEl = document.getElementById('error-msg');
+
+    if (!nome || !whatsapp || !pais || !passeioSelecionado) {
+      errorEl.style.display = 'block';
+      errorEl.textContent = 'Por favor, preencha todos os campos obrigatórios.';
+      return;
+    }
+
+    if (pais === 'BR' && !estado) {
+      errorEl.style.display = 'block';
+      errorEl.textContent = 'Por favor, selecione seu estado.';
+      return;
+    }
+
+    errorEl.style.display = 'none';
+    const btn = document.getElementById('btn-submit');
+    btn.disabled = true;
+    btn.textContent = 'Conectando...';
+
+    const payload = {
+      nome,
+      whatsapp,
+      pais,
+      estado: pais === 'BR' ? estado : '',
+      ja_fez_passeio: passeioSelecionado === 'sim' ? 'Sim' : 'Não',
+      optin_marketing: optin ? 'Sim' : 'Não',
+      data_hora: new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })
+    };
+
+    try {
+      await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } catch (e) {}
+
+    document.getElementById('form-area').style.display = 'none';
+    document.getElementById('success-nome').textContent = nome.split(' ')[0];
+    document.getElementById('success-area').style.display = 'block';
+  }
+</script>
+</body>
+</html>

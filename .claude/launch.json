@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "portal",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "portal", "-l", "3000", "--no-clipboard"],
+      "port": 3000
+    }
+  ]
+}
