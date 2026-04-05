@@ -5,7 +5,7 @@
 // ============================================================
 
 const SHEET_NAME = 'Cadastros';
-const SHEET_ID   = 'COLE_AQUI_O_ID_DA_SUA_PLANILHA'; // veja instruções no README
+const SHEET_ID   = '1ceXTUhX8A1GOrB5JTu6b0H25sU_LUNnDTdsgTUAgzNE';
 
 function doPost(e) {
   try {
@@ -18,9 +18,9 @@ function doPost(e) {
       sheet = ss.insertSheet(SHEET_NAME);
       sheet.appendRow([
         'Data/Hora', 'Nome', 'WhatsApp', 'País', 'Estado',
-        'Já fez o passeio?', 'Opt-in Marketing'
+        'Já fez o passeio?', 'Opt-in Marketing', 'Login Social', 'Email Social'
       ]);
-      sheet.getRange(1, 1, 1, 7).setFontWeight('bold').setBackground('#006B8F').setFontColor('#ffffff');
+      sheet.getRange(1, 1, 1, 9).setFontWeight('bold').setBackground('#1B7A6A').setFontColor('#ffffff');
       sheet.setFrozenRows(1);
     }
 
@@ -31,7 +31,9 @@ function doPost(e) {
       data.pais             || '',
       data.estado           || '',
       data.ja_fez_passeio   || '',
-      data.optin_marketing  || ''
+      data.optin_marketing  || '',
+      data.login_social     || '',
+      data.email_social     || ''
     ]);
 
     return ContentService
