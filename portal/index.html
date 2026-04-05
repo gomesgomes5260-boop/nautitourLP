@@ -567,19 +567,37 @@
   const GOOGLE_CLIENT_ID = '585814621812-83i9jo13kn76m334hadr8bvljkvtuapl.apps.googleusercontent.com';
 
   function loginGoogle() {
-    // Google Identity Services
     if (typeof google === 'undefined' || !google.accounts) {
       alert('SDK do Google ainda carregando. Tente novamente em alguns segundos.');
       return;
     }
-    google.accounts.id.initialize({
+    const client = google.accounts.oauth2.initCodeClient({
       client_id: GOOGLE_CLIENT_ID,
+      scope: 'profile',
+      ux_mode: 'popup',
       callback: function(response) {
-        const payload = JSON.parse(atob(response.credential.split('.')[1]));
-        submitSocial(payload.name, payload.email || '', 'google');
+        if (response.code) {
+          // Com code flow precisamos de backend, vamos usar o token flow
+        }
       }
     });
-    google.accounts.id.prompt();
+    // Usar token flow (implicit) que funciona sem backend
+    const tokenClient = google.accounts.oauth2.initTokenClient({
+      client_id: GOOGLE_CLIENT_ID,
+      scope: 'profile email',
+      callback: function(response) {
+        if (response.access_token) {
+          fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+            headers: { Authorization: 'Bearer ' + response.access_token }
+          })
+          .then(r => r.json())
+          .then(user => {
+            submitSocial(user.name || user.given_name || '', user.email || '', 'google');
+          });
+        }
+      }
+    });
+    tokenClient.requestAccessToken();
   }
 
   async function submitSocial(nome, email, provider) {
