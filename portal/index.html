@@ -542,11 +542,11 @@
     }
     FB.login(function(response) {
       if (response.authResponse) {
-        FB.api('/me', { fields: 'name,email' }, function(user) {
+        FB.api('/me', { fields: 'name' }, function(user) {
           submitSocial(user.name, user.email || '', 'facebook');
         });
       }
-    }, { scope: 'public_profile,email' });
+    }, { scope: 'public_profile' });
   }
 
   function loginInstagram() {
@@ -556,11 +556,11 @@
     }
     FB.login(function(response) {
       if (response.authResponse) {
-        FB.api('/me', { fields: 'name,email' }, function(user) {
+        FB.api('/me', { fields: 'name' }, function(user) {
           submitSocial(user.name, user.email || '', 'instagram');
         });
       }
-    }, { scope: 'public_profile,email', auth_type: 'rerequest' });
+    }, { scope: 'public_profile' });
   }
 
   // ⚠️  SUBSTITUA pelo seu Google Client ID (console.cloud.google.com)
