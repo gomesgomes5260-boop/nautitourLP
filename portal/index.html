@@ -381,7 +381,10 @@
 
 <div class="card">
   <div class="header">
-    <img src="/portal/logo.png" alt="Escuna Estrela" class="header-logo" />
+    <picture>
+      <source srcset="/portal/logo.webp" type="image/webp" />
+      <img src="/portal/logo.png" alt="Escuna Estrela" class="header-logo" />
+    </picture>
     <p>Conecte-se ao Wi-Fi gratuito</p>
     <svg class="wave" viewBox="0 0 400 24" preserveAspectRatio="none">
       <path d="M0,24 C100,0 300,24 400,8 L400,24 Z"/>
@@ -571,17 +574,6 @@
       alert('SDK do Google ainda carregando. Tente novamente em alguns segundos.');
       return;
     }
-    const client = google.accounts.oauth2.initCodeClient({
-      client_id: GOOGLE_CLIENT_ID,
-      scope: 'profile',
-      ux_mode: 'popup',
-      callback: function(response) {
-        if (response.code) {
-          // Com code flow precisamos de backend, vamos usar o token flow
-        }
-      }
-    });
-    // Usar token flow (implicit) que funciona sem backend
     const tokenClient = google.accounts.oauth2.initTokenClient({
       client_id: GOOGLE_CLIENT_ID,
       scope: 'profile email',
@@ -601,6 +593,11 @@
   }
 
   async function submitSocial(nome, email, provider) {
+    if (!nome) {
+      alert('Não foi possível obter seu nome. Tente preencher o formulário manualmente.');
+      return;
+    }
+
     const payload = {
       nome: nome,
       whatsapp: '',
@@ -620,7 +617,9 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
-    } catch (e) {}
+    } catch (e) {
+      console.warn('Falha ao enviar dados via ' + provider + ':', e);
+    }
 
     document.getElementById('form-area').style.display = 'none';
     document.getElementById('success-nome').textContent = nome.split(' ')[0];
@@ -661,6 +660,13 @@
       return;
     }
 
+    const digits = whatsapp.replace(/\D/g, '');
+    if (digits.length < 8) {
+      errorEl.style.display = 'block';
+      errorEl.textContent = 'Número de WhatsApp inválido. Inclua o código do país (ex: +55 22 99999-0000).';
+      return;
+    }
+
     if (pais === 'BR' && !estado) {
       errorEl.style.display = 'block';
       errorEl.textContent = 'Por favor, selecione seu estado.';
@@ -682,6 +688,7 @@
       data_hora: new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })
     };
 
+    let enviado = true;
     try {
       await fetch(WEBHOOK_URL, {
         method: 'POST',
@@ -689,7 +696,17 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
-    } catch (e) {}
+    } catch (e) {
+      enviado = false;
+    }
+
+    if (!enviado) {
+      btn.disabled = false;
+      btn.textContent = 'Conectar ao Wi-Fi';
+      errorEl.style.display = 'block';
+      errorEl.textContent = 'Sem conexão com a internet. Verifique sua rede e tente novamente.';
+      return;
+    }
 
     document.getElementById('form-area').style.display = 'none';
     document.getElementById('success-nome').textContent = nome.split(' ')[0];
