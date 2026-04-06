@@ -22,74 +22,38 @@
     --green-light: #d1fae5;
     --amber: #d97706;
     --amber-light: #fef3c7;
+    --red: #dc2626;
+    --red-light: #fee2e2;
   }
 
-  body {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-  }
+  body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-  /* Header */
-  .topbar {
-    background: var(--ocean-dark);
-    padding: 0 28px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 56px;
-  }
-
-  .topbar-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #fff;
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-  }
-
-  .topbar-right {
-    font-size: 12px;
-    color: rgba(255,255,255,0.6);
-  }
-
+  /* Topbar */
+  .topbar { background: var(--ocean-dark); padding: 0 28px; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  .topbar-logo { display: flex; align-items: center; gap: 10px; color: #fff; font-size: 15px; font-weight: 600; letter-spacing: 0.02em; }
+  .topbar-right { display: flex; align-items: center; gap: 16px; font-size: 12px; color: rgba(255,255,255,0.6); }
   #last-update { color: rgba(255,255,255,0.85); }
 
   /* Config banner */
-  .config-banner {
-    background: #fffbeb;
-    border-bottom: 1px solid #fde68a;
-    padding: 12px 28px;
-    font-size: 13px;
-    color: #92400e;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
+  .config-banner { background: #fffbeb; border-bottom: 1px solid #fde68a; padding: 12px 28px; font-size: 13px; color: #92400e; display: flex; align-items: center; gap: 8px; }
   .config-banner a { color: var(--ocean); font-weight: 600; }
 
+  /* Period filter bar */
+  .filter-bar { background: var(--white); border-bottom: 1px solid var(--border); padding: 12px 28px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .filter-bar-label { font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px; }
+  .period-btn { padding: 6px 14px; border-radius: 20px; border: 1.5px solid var(--border); background: var(--bg); color: var(--muted); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+  .period-btn:hover { border-color: var(--ocean); color: var(--ocean); }
+  .period-btn.active { background: var(--ocean); border-color: var(--ocean); color: #fff; }
+  .filter-spacer { flex: 1; }
+  .btn-refresh { background: var(--ocean-light); color: var(--ocean); border: none; border-radius: 8px; padding: 7px 14px; font-size: 12px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+  .btn-refresh:hover { background: #cce7f0; }
+
   /* Main */
-  .main { padding: 28px; max-width: 1100px; margin: 0 auto; }
+  .main { padding: 24px 28px; max-width: 1200px; margin: 0 auto; }
 
-  /* Metrics row */
-  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
-
-  @media (max-width: 768px) {
-    .metrics { grid-template-columns: 1fr 1fr; }
-    .charts-row { flex-direction: column !important; }
-  }
-
-  .metric {
-    background: var(--white);
-    border-radius: 14px;
-    padding: 20px;
-    border: 1px solid var(--border);
-  }
-
+  /* Metrics */
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px; }
+  .metric { background: var(--white); border-radius: 14px; padding: 20px; border: 1px solid var(--border); }
   .metric-label { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
   .metric-value { font-size: 32px; font-weight: 700; color: var(--text); line-height: 1; margin-bottom: 4px; }
   .metric-sub { font-size: 12px; color: var(--muted); }
@@ -98,7 +62,7 @@
   .badge-amber { background: var(--amber-light); color: var(--amber); }
 
   /* Charts */
-  .charts-row { display: flex; gap: 16px; margin-bottom: 24px; }
+  .charts-row { display: flex; gap: 16px; margin-bottom: 20px; }
   .chart-card { background: var(--white); border-radius: 14px; padding: 20px; border: 1px solid var(--border); }
   .chart-card.half { flex: 1; }
   .chart-card.third { flex: 0 0 32%; }
@@ -113,64 +77,77 @@
   .bar-fill { height: 100%; border-radius: 4px; background: var(--ocean); transition: width 0.6s ease; }
   .bar-count { font-size: 12px; color: var(--muted); min-width: 28px; text-align: right; }
 
-  /* Table */
+  /* Table card */
   .table-card { background: var(--white); border-radius: 14px; border: 1px solid var(--border); overflow: hidden; }
-  .table-header { padding: 18px 20px 14px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+  .table-header { padding: 16px 20px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
   .table-title { font-size: 13px; font-weight: 600; }
   .table-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .table-header-info { flex: 1; }
+  .search-input { padding: 7px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 13px; color: var(--text); background: var(--bg); outline: none; width: 260px; transition: border-color 0.2s; }
+  .search-input:focus { border-color: var(--ocean); background: #fff; }
+  .btn-export { background: var(--green-light); color: var(--green); border: none; border-radius: 8px; padding: 7px 14px; font-size: 12px; font-weight: 600; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
+  .btn-export:hover { background: #a7f3d0; }
   .table-wrap { overflow-x: auto; }
 
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th { padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); background: #f8fbfc; border-bottom: 1px solid var(--border); }
-  td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--text); }
+  th { padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); background: #f8fbfc; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  td { padding: 11px 14px; border-bottom: 1px solid var(--border); color: var(--text); }
   tr:last-child td { border-bottom: none; }
   tr:hover td { background: #f8fbfc; }
+  td.phone a { color: var(--ocean); text-decoration: none; font-weight: 500; }
+  td.phone a:hover { text-decoration: underline; }
 
-  .pill {
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 600;
-  }
-
+  .pill { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
   .pill-sim { background: var(--green-light); color: var(--green); }
   .pill-nao { background: var(--ocean-light); color: var(--ocean); }
   .pill-optin { background: var(--green-light); color: var(--green); }
-  .pill-no-optin { background: #fee2e2; color: #dc2626; }
+  .pill-no-optin { background: var(--red-light); color: var(--red); }
+  .pill-social { background: var(--amber-light); color: var(--amber); }
 
   /* Loading / empty */
   .loading { text-align: center; padding: 60px 20px; color: var(--muted); }
   .loading-spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--ocean); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 16px; }
   @keyframes spin { to { transform: rotate(360deg); } }
-
   .empty { text-align: center; padding: 40px; color: var(--muted); font-size: 14px; }
 
-  /* Refresh btn */
-  .btn-refresh {
-    background: var(--ocean-light);
-    color: var(--ocean);
-    border: none;
-    border-radius: 8px;
-    padding: 7px 14px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
+  /* Responsive */
+  @media (max-width: 900px) {
+    .metrics { grid-template-columns: 1fr 1fr; }
+    .charts-row { flex-direction: column; }
+    .chart-card.third { flex: none; }
+    .main { padding: 16px; }
+    .filter-bar { padding: 10px 16px; }
+    .topbar { padding: 0 16px; }
   }
-  .btn-refresh:hover { background: #cce7f0; }
+  @media (max-width: 560px) {
+    .metrics { grid-template-columns: 1fr; }
+    .search-input { width: 100%; }
+    .table-header { flex-direction: column; align-items: flex-start; }
+  }
 </style>
 </head>
 <body>
 
 <div class="topbar">
   <div class="topbar-logo">⛵ Escuna Búzios — Dashboard</div>
-  <div class="topbar-right">Atualizado: <span id="last-update">—</span></div>
+  <div class="topbar-right">
+    Atualizado: <span id="last-update">—</span>
+  </div>
 </div>
 
 <div class="config-banner" id="config-banner" style="display:none">
-  ⚠️ Configure o ID da sua planilha no topo do arquivo dashboard.html para carregar os dados reais.
-  <a href="#" onclick="document.getElementById('config-banner').style.display='none'">Fechar</a>
+  ⚠️ Configure o <strong>SHEET_ID</strong> no topo do arquivo dashboard.html para carregar os dados reais.
+  <a href="#" onclick="document.getElementById('config-banner').style.display='none';return false">Fechar</a>
+</div>
+
+<div class="filter-bar">
+  <span class="filter-bar-label">Período:</span>
+  <button class="period-btn" data-days="7"  onclick="setPeriod(7)">7 dias</button>
+  <button class="period-btn" data-days="30" onclick="setPeriod(30)">30 dias</button>
+  <button class="period-btn" data-days="90" onclick="setPeriod(90)">3 meses</button>
+  <button class="period-btn active" data-days="0" onclick="setPeriod(0)">Tudo</button>
+  <div class="filter-spacer"></div>
+  <button class="btn-refresh" onclick="loadData()">↺ Atualizar</button>
 </div>
 
 <div class="main">
@@ -179,7 +156,7 @@
     <div class="metric">
       <div class="metric-label">Total de cadastros</div>
       <div class="metric-value" id="m-total">—</div>
-      <div class="metric-sub">todos os tempos</div>
+      <div class="metric-sub" id="m-total-sub">todos os tempos</div>
     </div>
     <div class="metric">
       <div class="metric-label">Novos este mês</div>
@@ -226,13 +203,27 @@
     </div>
   </div>
 
+  <div class="charts-row">
+    <div class="chart-card third">
+      <div class="chart-title">Canal de cadastro</div>
+      <div class="chart-sub">Formulário manual vs. login social</div>
+      <canvas id="chart-canal" height="200"></canvas>
+    </div>
+    <div class="chart-card half">
+      <div class="chart-title">Cadastros — dia da semana</div>
+      <div class="chart-sub">Em qual dia chegam mais visitantes</div>
+      <canvas id="chart-semana" height="200"></canvas>
+    </div>
+  </div>
+
   <div class="table-card">
     <div class="table-header">
-      <div>
-        <div class="table-title">Últimos cadastros</div>
-        <div class="table-sub">50 mais recentes</div>
+      <div class="table-header-info">
+        <div class="table-title">Cadastros</div>
+        <div class="table-sub" id="table-count">—</div>
       </div>
-      <button class="btn-refresh" onclick="loadData()">↺ Atualizar</button>
+      <input type="search" class="search-input" id="search" placeholder="Buscar nome, WhatsApp, país..." oninput="filterTable()" />
+      <button class="btn-export" onclick="exportCSV()">⬇ Exportar CSV</button>
     </div>
     <div class="table-wrap">
       <div class="loading" id="loading">
@@ -247,13 +238,14 @@
             <th>WhatsApp</th>
             <th>País</th>
             <th>Estado</th>
-            <th>Já fez o passeio?</th>
+            <th>Já fez passeio?</th>
             <th>Opt-in</th>
+            <th>Canal</th>
           </tr>
         </thead>
         <tbody id="table-body"></tbody>
       </table>
-      <div class="empty" id="empty" style="display:none">Nenhum cadastro encontrado ainda.</div>
+      <div class="empty" id="empty" style="display:none">Nenhum cadastro encontrado.</div>
     </div>
   </div>
 
@@ -264,36 +256,40 @@
   const SHEET_ID  = 'COLE_AQUI_O_ID_DA_PLANILHA';
   const SHEET_TAB = 'Cadastros';
 
-  // URL pública para ler a planilha como CSV (a planilha precisa ser pública para leitura)
   const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(SHEET_TAB)}`;
 
-  let chartMensal = null;
-  let chartPerfil = null;
+  let allData    = [];
+  let filtered   = [];
+  let currentDays = 0;
+  let chartMensal = null, chartPerfil = null, chartCanal = null, chartSemana = null;
+
+  const mesesNomes = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const diasSemana = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+
+  /* ── Data loading ───────────────────────────────────────── */
 
   async function loadData() {
     if (SHEET_ID === 'COLE_AQUI_O_ID_DA_PLANILHA') {
       document.getElementById('config-banner').style.display = 'flex';
-      renderDemo();
+      allData = generateDemo();
+      applyPeriod();
       return;
     }
-
     try {
       const res  = await fetch(CSV_URL);
       const text = await res.text();
       const rows = parseCSV(text);
-      if (rows.length <= 1) { showEmpty(); return; }
-      const data = rows.slice(1).filter(r => r[0]);
-      renderAll(data);
+      allData = rows.length > 1 ? rows.slice(1).filter(r => r[0]) : [];
     } catch (err) {
       console.error(err);
-      renderDemo();
+      allData = generateDemo();
     }
+    applyPeriod();
   }
 
   function parseCSV(text) {
     return text.split('\n').map(line => {
-      const cols = [];
-      let cur = '', inQ = false;
+      const cols = []; let cur = '', inQ = false;
       for (let i = 0; i < line.length; i++) {
         if (line[i] === '"') { inQ = !inQ; }
         else if (line[i] === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
@@ -304,8 +300,32 @@
     });
   }
 
+  /* ── Period filter ──────────────────────────────────────── */
+
+  function setPeriod(days) {
+    currentDays = days;
+    document.querySelectorAll('.period-btn').forEach(b => {
+      b.classList.toggle('active', Number(b.dataset.days) === days);
+    });
+    applyPeriod();
+  }
+
+  function applyPeriod() {
+    if (currentDays === 0) {
+      filtered = allData;
+    } else {
+      const cutoff = new Date();
+      cutoff.setDate(cutoff.getDate() - currentDays);
+      filtered = allData.filter(r => {
+        try { return parseDate(r[0]) >= cutoff; } catch { return false; }
+      });
+    }
+    renderAll(filtered);
+  }
+
+  /* ── Render ─────────────────────────────────────────────── */
+
   function renderAll(rows) {
-    // rows: [data_hora, nome, whatsapp, pais, estado, ja_fez, optin]
     const total       = rows.length;
     const agora       = new Date();
     const mesAtual    = agora.getMonth();
@@ -314,30 +334,26 @@
     const recorrentes = rows.filter(r => r[5] && r[5].toLowerCase().includes('sim')).length;
     const optins      = rows.filter(r => r[6] && r[6].toLowerCase().includes('sim')).length;
 
-    document.getElementById('m-total').textContent        = total;
-    document.getElementById('m-mes').textContent          = novosMes;
-    document.getElementById('m-mes-sub').textContent      = mesesNomes[mesAtual];
-    document.getElementById('m-recorrentes').textContent  = recorrentes;
+    document.getElementById('m-total').textContent           = total;
+    document.getElementById('m-total-sub').textContent       = currentDays > 0 ? `últimos ${currentDays} dias` : 'todos os tempos';
+    document.getElementById('m-mes').textContent             = novosMes;
+    document.getElementById('m-mes-sub').textContent         = mesesNomes[mesAtual];
+    document.getElementById('m-recorrentes').textContent     = recorrentes;
     document.getElementById('m-recorrentes-pct').textContent = pct(recorrentes, total) + '% do total';
-    document.getElementById('m-optin').textContent        = optins;
-    document.getElementById('m-optin-pct').textContent    = pct(optins, total) + '% do total';
-    document.getElementById('last-update').textContent    = new Date().toLocaleTimeString('pt-BR');
+    document.getElementById('m-optin').textContent           = optins;
+    document.getElementById('m-optin-pct').textContent       = pct(optins, total) + '% do total';
+    document.getElementById('last-update').textContent       = new Date().toLocaleTimeString('pt-BR');
 
     renderChartMensal(rows);
     renderChartPerfil(recorrentes, total - recorrentes);
+    renderChartCanal(rows);
+    renderChartSemana(rows);
     renderBars('bar-estados', countField(rows.filter(r => r[3] === 'BR'), 4));
     renderBars('bar-paises', countField(rows, 3));
-    renderTable(rows.slice(-50).reverse());
+    renderTable(rows.slice(-100).reverse());
   }
 
-  function parseDate(str) {
-    // Formato: dd/mm/yyyy hh:mm:ss
-    const p = str.split(/[\s,/:\-]+/);
-    if (p.length >= 3) return new Date(p[2], p[1]-1, p[0]);
-    return new Date(str);
-  }
-
-  const mesesNomes = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  /* ── Charts ─────────────────────────────────────────────── */
 
   function renderChartMensal(rows) {
     const counts = {};
@@ -348,17 +364,12 @@
         counts[key] = (counts[key] || 0) + 1;
       } catch {}
     });
-
     const labels = Object.keys(counts).slice(-12);
     const values = labels.map(k => counts[k]);
-
     if (chartMensal) chartMensal.destroy();
     chartMensal = new Chart(document.getElementById('chart-mensal'), {
       type: 'bar',
-      data: {
-        labels,
-        datasets: [{ data: values, backgroundColor: '#006B8F', borderRadius: 6, borderSkipped: false }]
-      },
+      data: { labels, datasets: [{ data: values, backgroundColor: '#006B8F', borderRadius: 6, borderSkipped: false }] },
       options: {
         plugins: { legend: { display: false } },
         scales: {
@@ -377,21 +388,60 @@
         labels: ['Recorrentes', 'Primeira vez'],
         datasets: [{ data: [recorrentes, novos], backgroundColor: ['#006B8F', '#e6f4f8'], borderWidth: 0 }]
       },
+      options: { cutout: '68%', plugins: { legend: { position: 'bottom', labels: { font: { size: 12 }, color: '#5a7a85', padding: 16 } } } }
+    });
+  }
+
+  function renderChartCanal(rows) {
+    const canais = { 'Manual': 0, 'Google': 0, 'Facebook': 0, 'Instagram': 0 };
+    rows.forEach(r => {
+      const social = (r[7] || '').toLowerCase().trim();
+      if      (social === 'google')    canais['Google']++;
+      else if (social === 'facebook')  canais['Facebook']++;
+      else if (social === 'instagram') canais['Instagram']++;
+      else                             canais['Manual']++;
+    });
+    const labels = Object.keys(canais).filter(k => canais[k] > 0);
+    const values = labels.map(k => canais[k]);
+    const colors = { Manual: '#006B8F', Google: '#EA4335', Facebook: '#1877F2', Instagram: '#bc1888' };
+    if (chartCanal) chartCanal.destroy();
+    chartCanal = new Chart(document.getElementById('chart-canal'), {
+      type: 'doughnut',
+      data: {
+        labels,
+        datasets: [{ data: values, backgroundColor: labels.map(l => colors[l]), borderWidth: 0 }]
+      },
+      options: { cutout: '60%', plugins: { legend: { position: 'bottom', labels: { font: { size: 12 }, color: '#5a7a85', padding: 12 } } } }
+    });
+  }
+
+  function renderChartSemana(rows) {
+    const counts = [0,0,0,0,0,0,0];
+    rows.forEach(r => {
+      try { counts[parseDate(r[0]).getDay()]++; } catch {}
+    });
+    if (chartSemana) chartSemana.destroy();
+    chartSemana = new Chart(document.getElementById('chart-semana'), {
+      type: 'bar',
+      data: {
+        labels: diasSemana,
+        datasets: [{ data: counts, backgroundColor: counts.map((_, i) => i === 5 || i === 6 ? '#059669' : '#006B8F'), borderRadius: 6, borderSkipped: false }]
+      },
       options: {
-        cutout: '68%',
-        plugins: {
-          legend: { position: 'bottom', labels: { font: { size: 12 }, color: '#5a7a85', padding: 16 } }
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { size: 12 }, color: '#5a7a85' } },
+          y: { grid: { color: '#f0f7fa' }, ticks: { font: { size: 11 }, color: '#5a7a85', stepSize: 1 } }
         }
       }
     });
   }
 
+  /* ── Bar lists ──────────────────────────────────────────── */
+
   function countField(rows, idx) {
     const counts = {};
-    rows.forEach(r => {
-      const val = (r[idx] || '').trim();
-      if (val) counts[val] = (counts[val] || 0) + 1;
-    });
+    rows.forEach(r => { const v = (r[idx] || '').trim(); if (v) counts[v] = (counts[v] || 0) + 1; });
     return Object.entries(counts).sort((a,b) => b[1]-a[1]).slice(0, 8);
   }
 
@@ -405,56 +455,122 @@
             <div class="bar-track"><div class="bar-fill" style="width:${Math.round(count/max*100)}%"></div></div>
             <span class="bar-count">${count}</span>
           </div>`).join('')
-      : '<div class="empty" style="padding:20px">Sem dados</div>';
+      : '<div class="empty" style="padding:20px 0">Sem dados</div>';
   }
 
-  function renderTable(rows) {
-    document.getElementById('loading').style.display   = 'none';
-    document.getElementById('table-main').style.display = rows.length ? '' : 'none';
-    document.getElementById('empty').style.display     = rows.length ? 'none' : '';
+  /* ── Table ──────────────────────────────────────────────── */
 
-    document.getElementById('table-body').innerHTML = rows.map(r => `
-      <tr>
+  let tableRows = [];
+
+  function renderTable(rows) {
+    tableRows = rows;
+    document.getElementById('loading').style.display = 'none';
+    filterTable();
+  }
+
+  function filterTable() {
+    const q = (document.getElementById('search').value || '').toLowerCase().trim();
+    const shown = q
+      ? tableRows.filter(r => r.some(cell => (cell || '').toLowerCase().includes(q)))
+      : tableRows;
+
+    const tbody = document.getElementById('table-body');
+    const count = document.getElementById('table-count');
+
+    if (shown.length === 0) {
+      document.getElementById('table-main').style.display = 'none';
+      document.getElementById('empty').style.display = '';
+      count.textContent = 'Nenhum resultado';
+      return;
+    }
+
+    document.getElementById('table-main').style.display = '';
+    document.getElementById('empty').style.display = 'none';
+    count.textContent = `${shown.length} registro${shown.length !== 1 ? 's' : ''}`;
+
+    tbody.innerHTML = shown.map(r => {
+      const wpp    = (r[2] || '').replace(/\D/g, '');
+      const wppLink = wpp ? `<a href="https://wa.me/${wpp}" target="_blank" rel="noopener">${r[2]}</a>` : '—';
+      const social = (r[7] || '').trim();
+      const canalPill = social
+        ? `<span class="pill pill-social">${social}</span>`
+        : `<span class="pill pill-nao">Manual</span>`;
+      return `<tr>
         <td>${r[0] || '—'}</td>
         <td>${r[1] || '—'}</td>
-        <td>${r[2] || '—'}</td>
+        <td class="phone">${wppLink}</td>
         <td>${r[3] || '—'}</td>
         <td>${r[4] || '—'}</td>
         <td><span class="pill ${r[5] && r[5].toLowerCase().includes('sim') ? 'pill-sim' : 'pill-nao'}">${r[5] || '—'}</span></td>
         <td><span class="pill ${r[6] && r[6].toLowerCase().includes('sim') ? 'pill-optin' : 'pill-no-optin'}">${r[6] || '—'}</span></td>
-      </tr>`).join('');
+        <td>${canalPill}</td>
+      </tr>`;
+    }).join('');
   }
+
+  /* ── Export CSV ─────────────────────────────────────────── */
+
+  function exportCSV() {
+    const q = (document.getElementById('search').value || '').toLowerCase().trim();
+    const rows = q ? tableRows.filter(r => r.some(cell => (cell || '').toLowerCase().includes(q))) : tableRows;
+
+    const header = ['Data/Hora','Nome','WhatsApp','País','Estado','Já fez o passeio?','Opt-in Marketing','Canal','Email Social'];
+    const lines  = [header, ...rows].map(r =>
+      r.map(cell => `"${(cell || '').replace(/"/g, '""')}"`).join(',')
+    );
+
+    const blob = new Blob(['\uFEFF' + lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = `cadastros-escuna-${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  /* ── Helpers ────────────────────────────────────────────── */
+
+  function parseDate(str) {
+    const p = str.split(/[\s,/:\-]+/);
+    if (p.length >= 3) return new Date(p[2], p[1]-1, p[0]);
+    return new Date(str);
+  }
+
+  function pct(a, b) { return b ? Math.round(a/b*100) : 0; }
 
   function showEmpty() {
     document.getElementById('loading').style.display = 'none';
     document.getElementById('empty').style.display   = '';
   }
 
-  function pct(a, b) { return b ? Math.round(a/b*100) : 0; }
+  /* ── Demo data ──────────────────────────────────────────── */
 
-  // Dados de demonstração quando o ID não está configurado
-  function renderDemo() {
+  function generateDemo() {
     const demo = [];
-    const estados = ['RJ','SP','MG','ES','PR','SC','RS','BA'];
-    const paises  = ['BR','BR','BR','BR','BR','AR','UY','US','PT'];
-    for (let i = 50; i >= 1; i--) {
+    const estados  = ['RJ','SP','MG','ES','PR','SC','RS','BA'];
+    const paises   = ['BR','BR','BR','BR','BR','AR','UY','US','PT'];
+    const canais   = ['','','','','google','facebook',''];
+    for (let i = 90; i >= 1; i--) {
       const d = new Date(); d.setDate(d.getDate() - i);
       const p = paises[Math.floor(Math.random()*paises.length)];
+      const c = canais[Math.floor(Math.random()*canais.length)];
       demo.push([
         d.toLocaleDateString('pt-BR') + ' 10:00:00',
-        'Visitante ' + (51-i),
+        'Visitante ' + (91-i),
         '+55 22 9' + Math.floor(Math.random()*10000000+90000000),
         p,
         p === 'BR' ? estados[Math.floor(Math.random()*estados.length)] : '',
         Math.random() > 0.4 ? 'Sim' : 'Não',
-        Math.random() > 0.2 ? 'Sim' : 'Não'
+        Math.random() > 0.2 ? 'Sim' : 'Não',
+        c,
+        c ? 'visitante@email.com' : ''
       ]);
     }
-    renderAll(demo);
+    return demo;
   }
 
   loadData();
-  setInterval(loadData, 5 * 60 * 1000); // atualiza a cada 5 min
+  setInterval(loadData, 5 * 60 * 1000);
 </script>
 </body>
 </html>
