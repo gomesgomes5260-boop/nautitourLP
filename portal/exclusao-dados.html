@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Exclusao de Dados — Escuna Estrela</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Georgia', serif;
+    background: #E8DCC8;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .card {
+    background: #FAF6EF;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 600px;
+    overflow: hidden;
+    box-shadow: 0 4px 40px rgba(26,90,70,0.15);
+  }
+
+  .header {
+    background: linear-gradient(160deg, #1B8A7A 0%, #145A4E 100%);
+    padding: 32px 28px 28px;
+    text-align: center;
+    position: relative;
+  }
+
+  .wave {
+    position: absolute;
+    bottom: -1px; left: 0; right: 0;
+    height: 24px;
+    fill: #FAF6EF;
+  }
+
+  .header-logo {
+    width: 160px;
+    max-width: 60%;
+    height: auto;
+    margin: 0 auto 14px;
+    display: block;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));
+  }
+
+  .header h1 {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  .content {
+    padding: 32px 28px 40px;
+    color: #3a3a3a;
+    line-height: 1.7;
+  }
+
+  .content p {
+    font-size: 0.92rem;
+    margin-bottom: 14px;
+  }
+
+  .content h2 {
+    color: #145A4E;
+    font-size: 1.05rem;
+    margin: 24px 0 10px;
+  }
+
+  .content h2:first-child { margin-top: 0; }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #145A4E;
+    margin-bottom: 6px;
+  }
+
+  .form-group input, .form-group textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid #D6CCBA;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    background: #fff;
+    transition: border-color 0.2s;
+  }
+
+  .form-group input:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: #1B7A6A;
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .btn {
+    display: inline-block;
+    color: #fff;
+    background: #1B7A6A;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .btn:hover { background: #145A4E; }
+
+  .success-msg {
+    display: none;
+    background: #d4edda;
+    color: #155724;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    margin-top: 16px;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #1B7A6A;
+    font-size: 0.88rem;
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="header">
+    <img src="/portal/logo.png" alt="Escuna Estrela" class="header-logo" />
+    <h1>Exclusao de Dados</h1>
+    <svg class="wave" viewBox="0 0 400 24" preserveAspectRatio="none">
+      <path d="M0,0 C100,24 300,24 400,0 L400,24 L0,24 Z"/>
+    </svg>
+  </div>
+
+  <div class="content">
+    <h2>Solicitar exclusao dos seus dados</h2>
+    <p>Se voce utilizou o login com Facebook para acessar o Wi-Fi da Escuna Estrela e deseja que seus dados sejam excluidos, preencha o formulario abaixo. Processaremos sua solicitacao em ate 15 dias uteis.</p>
+
+    <form id="deleteForm" onsubmit="return enviarSolicitacao(event)">
+      <div class="form-group">
+        <label>Seu nome</label>
+        <input type="text" id="nome" required placeholder="Nome completo" />
+      </div>
+      <div class="form-group">
+        <label>Email associado ao login</label>
+        <input type="email" id="email" required placeholder="seu@email.com" />
+      </div>
+      <div class="form-group">
+        <label>Informacoes adicionais (opcional)</label>
+        <textarea id="info" placeholder="Descreva quais dados deseja excluir ou qualquer informacao relevante"></textarea>
+      </div>
+      <button type="submit" class="btn">Solicitar exclusao</button>
+    </form>
+
+    <div class="success-msg" id="successMsg">
+      Sua solicitacao foi recebida com sucesso! Voce recebera uma confirmacao por email quando a exclusao for concluida. Codigo de acompanhamento: <strong id="trackCode"></strong>
+    </div>
+
+    <a href="/portal/" class="back-link">Voltar ao portal</a>
+  </div>
+</div>
+
+<script>
+function enviarSolicitacao(e) {
+  e.preventDefault();
+  var code = 'DEL-' + Date.now().toString(36).toUpperCase();
+  document.getElementById('deleteForm').style.display = 'none';
+  document.getElementById('trackCode').textContent = code;
+  document.getElementById('successMsg').style.display = 'block';
+
+  // Envia para o webhook do Google Sheets
+  var data = {
+    tipo: 'exclusao_dados',
+    nome: document.getElementById('nome').value,
+    email: document.getElementById('email').value,
+    info: document.getElementById('info').value,
+    codigo: code,
+    data: new Date().toISOString()
+  };
+
+  fetch('https://script.google.com/macros/s/AKfycbzgNgIKIJBz1eYOxFoqyu6NjQZnuV1UgyHAc5zPCMm_qU7pXt65481MuxgfZbHnwJFtxw/exec', {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+
+  return false;
+}
+</script>
+
+</body>
+</html>
